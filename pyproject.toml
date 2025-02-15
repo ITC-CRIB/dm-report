@@ -40,3 +40,6 @@ Issues = "https://github.com/ITC-CRIB/dm-crawler/issues"
 
 [tool.hatch.version]
 path = "src/dmcrawler/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dmcrawler"]
