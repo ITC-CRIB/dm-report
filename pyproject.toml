@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "DM-Crawler"
+dynamic = ["version"]
+authors = [
+    { name="Serkan Girgin", email="girgink@gmail.com" },
+]
+description = "A package to collect data from Digital Matter trackers."
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+]
+dependencies = [
+    "requests",
+]
+keywords = [
+    "GPS Tracker",
+    "Data Collection",
+    "IoT",
+]
+
+[project.urls]
+Homepage = "https://github.com/ITC-CRIB/dm-crawler"
+Issues = "https://github.com/ITC-CRIB/dm-crawler/issues"
+
+[tool.hatch.version]
+path = "src/dmcrawler/__init__.py"

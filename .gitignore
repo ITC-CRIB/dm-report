@@ -1,0 +1,13 @@
+# Environment
+.venv/
+
+# Sphinx documentation
+docs/_build/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+
+# Packaging
+build/
+*.egg
