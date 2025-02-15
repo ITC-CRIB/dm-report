@@ -1,1 +1,5 @@
 requests
+click
+dotenv
+tabulate
+beautifulsoup4
