@@ -8,8 +8,8 @@ dynamic = ["version"]
 authors = [
     { name="Serkan Girgin", email="girgink@gmail.com" },
 ]
-description = "A package to collect data from Digital Matter trackers."
-readme = "README.md"
+description = "A package and command-line utility to collect data from Digital Matter trackers."
+readme = "README.rst"
 license = {file = "LICENSE"}
 requires-python = ">=3.10"
 classifiers = [
