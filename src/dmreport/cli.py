@@ -1,13 +1,13 @@
 import click
 
-import os
-import dotenv
 import csv
-import json
-from enum import Enum
-from io import StringIO
-import tabulate
 import datetime
+import dotenv
+import enum
+import io
+import json
+import os
+import tabulate
 
 from .client import Client, Report
 
@@ -16,18 +16,34 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class OutputFormat(Enum):
-    """Output format."""
+class OutputFormat(enum.Enum):
+    """Output format enumeration class."""
     CSV = 'csv'
+    """CSV"""
     JSON = 'json'
+    """JSON"""
     TEXT = 'text'
+    """Plain text"""
     MARKDOWN = 'markdown'
+    """Markdown"""
 
 
-def get_output(data, format: OutputFormat) -> str:
+def serialize_output(data: list[dict], format: OutputFormat) -> str:
+    """Serializes output data.
+
+    Args:
+        data (list[dict]): Output data rows.
+        format (OutputFormat): Output format.
+
+    Returns:
+        Serializes output (str)
+
+    Raises:
+        ValueError("Invalid output format.")
+    """
     if format == OutputFormat.CSV:
-        with StringIO() as stream:
-            writer = csv.DictWriter(stream, fieldnames=data[0].keys())
+        with io.StringIO(newline = '') as stream:
+            writer = csv.DictWriter(stream, fieldnames = data[0].keys())
             writer.writeheader()
             writer.writerows(data)
             out = stream.getvalue()
@@ -151,6 +167,7 @@ def cli(
     format,
     debug
 ):
+    """Command line interface."""
     # Set logging level if debug flag is set
     if debug:
         logging.basicConfig(level = logging.DEBUG)
@@ -184,13 +201,13 @@ def cli(
     else:
         raise ValueError("Invalid report type.")
 
-    # Generate output
-    out = get_output(data, OutputFormat(format))
+    # Serialize output
+    out = serialize_output(data, OutputFormat(format))
 
     # Check if output to a file is requested
     if output:
         # Store output
-        with open(output, 'w', encoding='utf-8') as file:
+        with open(output, 'w', encoding = 'utf-8', newline = '') as file:
             file.write(out)
 
     else:
@@ -199,5 +216,6 @@ def cli(
 
 
 def main():
+    """Main."""
     dotenv.load_dotenv(os.path.join(os.getcwd(), '.env'))
     cli(auto_envvar_prefix = 'DM')

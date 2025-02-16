@@ -1,9 +1,9 @@
-import requests
 import csv
-from enum import Enum
-from io import StringIO
-import urllib
 import datetime
+import enum
+import io
+import requests
+import urllib
 from bs4 import BeautifulSoup
 from functools import cache
 
@@ -11,15 +11,38 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class Report(Enum):
+class Report(enum.Enum):
+    """Report enumeration class."""
     ASSETS = 21
+    """Assets report."""
     TELEMETRY = 43
+    """Asset telemetry report."""
 
 
 class Client:
+    """Client class.
+
+    Class Attributes:
+        base_url (str): Base URL address.
+
+    Attributes:
+        session (requests.Session): Session object.
+    """
+
     base_url = 'https://lescav.telematics.guru'
 
     def __init__(self, username: str, password: str, organisation_id: str = None):
+        """Initializes client object.
+
+        Args:
+            username (str): Account username.
+            password (str): Account password.
+            organisation_id (str): Organisation id (optional)
+
+        Raises:
+            ValueError("Invalid username or password.")
+            ValueError("Invalid organisation id.")
+        """
         # Start session
         self.session = requests.Session()
 
@@ -48,16 +71,19 @@ class Client:
                 raise ValueError("Invalid organisation id.")
 
 
-    def __del__(self):
-        # Close session
-        self.session.close()
-
-
     @staticmethod
     def load_csv(data: str) -> list:
+        """Converts CSV data as string into a list of data rows.
+
+        Args:
+            data (str): CSV data.
+
+        Returns:
+            List of data rows (dict).
+        """
         rows = []
 
-        with StringIO(data) as stream:
+        with io.StringIO(data) as stream:
             reader = csv.DictReader(stream)
             for row in reader:
                 rows.append(row)
@@ -66,6 +92,15 @@ class Client:
 
 
     def get_data(self, id: str, params: dict = None) -> list[dict]:
+        """Retrieves report data.
+
+        Args:
+            id (str): Report id.
+            params (dict): Report parameters (optional)
+
+        Returns:
+            List of report data rows (dict).
+        """
         result = self.session.post(
             Client.base_url + '/Report/Download',
             data = {
@@ -85,6 +120,15 @@ class Client:
 
     @cache
     def get_asset_ids(self) -> dict:
+        """Returns assets ids.
+
+        Raises:
+            ValueError("Invalid response.")
+            ValueError("Invalid asset code.")
+
+        Returns:
+            Dictionary of assets ids (code: id).
+        """
         result = self.session.get(
             Client.base_url + '/Report?ReportId=' + str(Report.TELEMETRY.value)
         )
@@ -103,7 +147,18 @@ class Client:
         return out;
 
 
-    def get_asset_id(self, asset) -> str:
+    def get_asset_id(self, asset: str) -> str:
+        """Returns asset id of an asset.
+
+        Args:
+            asset (str): Asset code.
+
+        Returns:
+            Asset id (str).
+
+        Raises:
+            ValueError("Invalid asset code.")
+        """
         id = self.get_asset_ids().get(asset)
         if not id:
             raise ValueError("Invalid asset code.")
@@ -111,10 +166,24 @@ class Client:
 
 
     def get_assets(self) -> list[dict]:
+        """Retrieves asset report data.
+
+        Returns:
+            List of asset data rows (dict).
+        """
         return self.get_data(Report.ASSETS.value)
 
 
     def get_telemetry(self, asset_id: str, date: datetime.datetime = None) -> list[dict]:
+        """Retrieves asset telemetry report data.
+
+        Args:
+            asset_id (str): Asset id.
+            date (datetime.datetime): Report date.
+
+        Returns:
+            List of asset telemetry data rows (dict).
+        """
         if not date:
             date = datetime.datetime.now()
 
