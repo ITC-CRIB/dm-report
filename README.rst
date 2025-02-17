@@ -1,3 +1,35 @@
+.. list-table::
+   :widths: 25 25
+   :header-rows: 1
+
+   * - `fair-software.nl <https://fair-software.nl>`_ recommendations
+     - Badges
+   * - \1. Code repository
+     - |GitHub Badge|
+   * - \2. License
+     - |License Badge|
+   * - \3. Community Registry
+     - |PyPI Badge|
+   * - \4. Enable Citation
+     - |Zenodo Badge|
+
+.. |GitHub Badge| image:: https://img.shields.io/github/v/release/ITC-CRIB/dm-report
+   :target: https://github.com/ITC-CRIB/dm-report
+   :alt: GitHub Badge
+
+.. |License Badge| image:: https://img.shields.io/badge/license-GPLv3-blue
+   :target: https://opensource.org/license/gpl-3-0
+   :alt: License Badge
+
+.. |PyPI Badge| image:: https://img.shields.io/pypi/v/dm-report?colorB=blue
+   :target: https://pypi.org/project/dm-report/
+   :alt: PyPI Badge
+
+.. |Zenodo Badge| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.14881990.svg
+   :target: https://doi.org/10.5281/zenodo.14881990
+   :alt: Zenodo Badge
+
+
 DM-Report
 =========
 
