@@ -27,8 +27,58 @@ Installation
       pip install .
 
 
-Usage
------
+CLI Usage
+---------
+
+.. code:: console
+
+   Usage: dmreport [OPTIONS] {assets|telemetry}
+
+     Retrieves tracker reports.
+
+   Options:
+     -u, --username TEXT             Account user name.  [required]
+     -p, --password TEXT             Account password.  [required]
+     -g, --organisation TEXT         Organisation id.
+     --asset TEXT                    Asset code.
+     --date [%Y-%m-%d]               Telemetry date.  [default: 2025-02-17]
+     --days INTEGER RANGE            Number of days.  [default: 1; x>=1]
+     -o, --output PATH               Path to store the output.
+     -f, --format [csv|json|text|markdown]
+                                     Output format.  [default: text]
+     -d, --debug                     Enable debug mode.
+     -v, --version                   Show the version and exit.
+     -h, --help                      Show this message and exit.
+
+
+Instead of passing arguments to command-line utility, you can also use
+the following environment variables:
+
+- ``DM_USERNAME``: Username.
+- ``DM_PASSWORD``: Password.
+- ``DM_ORGANISATION_ID``: Organisation id.
+
+If a ``.env`` file exists in the working directory, the command-line utility
+automatically reads environment variables from the file.
+
+
+Basic example to retrieve information about the assets as CSV:
+
+.. code:: console
+
+   dmreport assets --format csv --output assets.csv
+
+
+Basic example to retrieve telemetry information of an asset for a specified
+number of days starting from a starting date as CSV:
+
+.. code:: console
+
+   dmreport telemetry --asset my_asset --date 2025-01-02 --days 15 --format csv --output telemetry.csv
+
+
+Package Usage
+-------------
 
 Basic example to retrieve information about the assets:
 
@@ -58,17 +108,6 @@ Basic example to retrieve telemetry data of an asset for a specific date:
        client.get_asset_id('asset_code'),
        datetime.strptime('yyyy-mm-dd', '%Y-%m-%d')
    )
-
-
-Instead of passing arguments to the constructor method, client parameters can
-be specified using the following environment variables:
-
-- ``DM_USERNAME``: Username.
-- ``DM_PASSWORD``: Password.
-- ``DM_ORGANISATION_ID``: Organisation id.
-
-If a ``.env`` file exists in the working directory, the package automatically
-reads environment variables from the file.
 
 
 Acknowledgements
