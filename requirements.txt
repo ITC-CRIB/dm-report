@@ -1,5 +1,5 @@
 beautifulsoup4
 click
-dotenv
+python-dotenv
 requests
 tabulate
