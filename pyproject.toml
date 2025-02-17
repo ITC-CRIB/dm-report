@@ -26,7 +26,11 @@ classifiers = [
     "Intended Audience :: Science/Research",
 ]
 dependencies = [
+    "beautifulsoup4",
+    "click",
+    "dotenv",
     "requests",
+    "tabulate",
 ]
 keywords = [
     "GPS Tracker",
